@@ -1,11 +1,10 @@
-import ProductList from "@/views/productList/productList";
-
+import Reservation from "@/views/reservation/Reservation";
 const Home = () => {
-    return (
-        <div>
-            <ProductList />
-        </div>
-    );
+  return (
+    <div>
+      <Reservation />
+    </div>
+  );
 };
 
 export default Home;
