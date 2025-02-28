@@ -7,7 +7,7 @@ import styles from "./hospitalList.module.scss";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import Button from "@/components/Button/Button";
+import Button from "@/component/Button/Button";
 
 const cx = cn.bind(styles);
 

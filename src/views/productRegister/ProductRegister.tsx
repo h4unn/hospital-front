@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import cn from "classnames/bind";
 import styles from "./ProductRegister.module.scss";
-import TextInput from "@/components/TextField/TextInput/TextInput";
-import Button from "@/components/Button/Button";
+import TextInput from "@/component/TextField/TextInput/TextInput";
+import Button from "@/component/Button/Button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 

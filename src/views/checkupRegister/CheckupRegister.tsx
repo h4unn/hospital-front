@@ -2,9 +2,9 @@
 import React from "react";
 import cn from "classnames/bind";
 import styles from "./CheckupRegister.module.scss";
-import Button from "@/components/Button/Button";
-import TextInput from "@/components/TextField/TextInput/TextInput";
-import Radio from "@/components/Radio/Radio";
+import Button from "@/component/Button/Button";
+import TextInput from "@/component/TextField/TextInput/TextInput";
+import Radio from "@/component/Radio/Radio";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 const cx = cn.bind(styles);

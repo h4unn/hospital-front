@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import cn from "classnames/bind";
 import styles from "./ReservationCheck.module.scss";
-import Button from "@/components/Button/Button";
-import PhoneInput from "@/components/TextField/PhoneInput/Phone";
+import Button from "@/component/Button/Button";
+import PhoneInput from "@/component/TextField/PhoneInput/Phone";
 import axios from "axios";
 
 const cx = cn.bind(styles);

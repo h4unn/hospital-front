@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import cn from "classnames/bind";
 import styles from "./productList.module.scss";
@@ -7,7 +6,7 @@ import styles from "./productList.module.scss";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import Button from "@/components/Button/Button";
+import Button from "@/component/Button/Button";
 
 const cx = cn.bind(styles);
 
