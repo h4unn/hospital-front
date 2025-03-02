@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AuthService } from "./auth.service";
+import { ProductService } from "./product.service";
 
 let tokens = {
   accessToken: "",
@@ -27,6 +28,7 @@ const apiServer = axios.create({
 
 apiServer.interceptors.request.use(async (config) => {
   if (tokens.accessToken) {
+    console.log("accessToken", tokens.accessToken);
     config.headers["Authorization"] = `Bearer ${tokens.accessToken}`;
   }
   return config;
@@ -62,6 +64,7 @@ apiServer.interceptors.response.use(
 );
 
 export const authService = new AuthService(apiServer);
+export const productService = new ProductService(apiServer);
 // export const userService = new UserService(apiServer);
 // export const categoryService = new CategoryService(apiServer);
 // export const lodgeService = new LodgeService(apiServer);

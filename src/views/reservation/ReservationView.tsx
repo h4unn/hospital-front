@@ -16,7 +16,7 @@ import { useSearchParams } from "next/navigation";
 
 const cx = cn.bind(styles);
 
-const Reservation = () => {
+const ReservationView = () => {
   /** TextInput창 크기 */
   const inputSize = { width: "100%", height: "48px" };
 
@@ -365,4 +365,4 @@ const Reservation = () => {
   );
 };
 
-export default Reservation;
+export default ReservationView;

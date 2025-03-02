@@ -1,9 +1,9 @@
-import Reservation from "@/views/reservation/Reservation";
+import ReservationView from "@/views/reservation/ReservationView";
 const Home = () => {
   return (
-    <div>
-      <Reservation />
-    </div>
+    <>
+      <ReservationView />
+    </>
   );
 };
 

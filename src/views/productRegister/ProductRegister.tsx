@@ -1,97 +1,89 @@
 "use client";
 
-import React, { useState } from "react";
 import cn from "classnames/bind";
 import styles from "./ProductRegister.module.scss";
-import TextInput from "@/component/TextField/TextInput/TextInput";
-import Button from "@/component/Button/Button";
-import { useForm, SubmitHandler } from "react-hook-form";
+
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+
+import Input from "@/components/Input";
+import Button from "@/component/Button/Button";
 
 const cx = cn.bind(styles);
 
-type FormData = {
-  productName: string;
-  productDetail: string;
-  productPrice: number;
-  selective?: string[];
-  hospital: string;
+type addProductType = {
+  name: string;
+  description: string;
+  price: number;
+};
+type propsType = {
+  productFn: (data: productRequestType) => void;
 };
 
-const ProductRegister = () => {
-  const [formattedPrice, setFormattedPrice] = useState("");
+const schema = yup.object().shape({
+  name: yup.string().required("상품 이름을 입력해주세요"),
+  description: yup.string().required("상품 설명을 입력해주세요"),
+  price: yup.number().required("상품 가격을 입력해주세요"),
+});
+
+const ProductRegister = (props: propsType) => {
+  const { productFn } = props;
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-    reset,
-  } = useForm<FormData>();
+  } = useForm<addProductType>({
+    resolver: yupResolver(schema),
+  });
 
-  // const selectOptions = [
-  //     "강남 세브란스병원 헬스체크업센터",
-  //     "하나로의료재단 종합센터",
-  //     "하나로의료재단 강남센터",
-  //     "광동병원 통합웰니스센터",
-  //     "군포 지샘병원 건강검진센터",
-  //     "창원 서울패밀리병원 AI건강증진센터",
-  // ];
+  // const onSubmit: SubmitHandler<FormData> = async (data) => {
+  //   console.log(data);
+  //   try {
+  //     const hospital = data.hospitalId;
+  //     console.log("병원 이름:", hospital);
+  //     const token = localStorage.getItem("accessToken");
+  //     const priceWithoutCommas = String(formattedPrice).replace(/,/g, "");
 
-  const inputSize = { width: "100%", height: "48px" };
+  //     const response = await fetch("/api/product", {
+  //       method: "POST",
 
-  const formatPrice = (value: string) => {
-    const numericValue = value.replace(/\D/g, "");
-    return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       credentials: "include",
+  //       body: JSON.stringify({
+  //         name: data.name,
+  //         description: data.description,
+  //         price: Number(priceWithoutCommas),
+  //         selective: data.selective,
+  //         hospital: hospital,
+  //       }),
+  //     });
+  //     console.log("서버 응답:", response);
 
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const numericValue = value.replace(/\D/g, "");
-    const formatted = formatPrice(numericValue);
-    setFormattedPrice(formatted);
-  };
+  //     const textResponse = await response.text();
+  //     console.log("서버 응답:", textResponse);
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    try {
-      const priceWithoutCommas = String(formattedPrice).replace(/,/g, "");
-      const hospital = data.hospital;
-      const token = localStorage.getItem("accessToken");
-
-      const response = await fetch("/api/product", {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          name: data.productName,
-          description: data.productDetail,
-          price: Number(priceWithoutCommas),
-          selective: data.selective,
-          hospital: hospital,
-        }),
-      });
-
-      const textResponse = await response.text();
-      console.log("서버 응답:", textResponse);
-
-      if (response.ok) {
-        const responseData = JSON.parse(textResponse);
-        alert("상품 등록이 완료되었습니다.");
-        console.log("상품 등록 성공:", responseData);
-        reset();
-        router.push("/productList");
-      } else {
-        console.error("API 에러:", textResponse);
-        alert(`상품 등록 실패: ${textResponse}`);
-      }
-    } catch (error) {
-      console.error("에러 발생:", error);
-      alert("폼 제출 중 에러가 발생했습니다.");
-    }
-  };
+  //     if (response.ok) {
+  //       const responseData = JSON.parse(textResponse);
+  //       alert("상품 등록이 완료되었습니다.");
+  //       console.log("상품 등록 성공:", responseData);
+  //       reset();
+  //       // router.push("/productList");
+  //     } else {
+  //       console.error("API 에러:", textResponse);
+  //       alert(`상품 등록 실패: ${textResponse}`);
+  //     }
+  //   } catch (error) {
+  //     console.error("에러 발생:", error);
+  //     alert("폼 제출 중 에러가 발생했습니다.");
+  //   }
+  // };
 
   return (
     <div className={cx("productRegisterWrapper")}>
@@ -99,53 +91,29 @@ const ProductRegister = () => {
         <h1 className={cx("productRegisterTitle")}>건강 검진 상품 등록</h1>
         <form
           className={cx("productRegisterContainer")}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(productFn)}
         >
           <div className={cx("productRegisterInput")}>
-            <TextInput
+            <Input
               label="상품 이름"
-              {...inputSize}
-              {...register("productName", {
-                required: "상품 이름을 입력해주세요",
-              })}
+              {...register("name")}
+              error={errors ? errors.name : undefined}
             />
-            {errors.productName && (
-              <span className={cx("errorMessage")}>
-                {errors.productName?.message}
-              </span>
-            )}
           </div>
           <div className={cx("productRegisterInput")}>
-            <TextInput
+            <Input
               label="상품 설명"
-              {...inputSize}
-              {...register("productDetail", {
-                required: "상품 설명을 입력해주세요",
-              })}
+              {...register("description")}
+              error={errors ? errors.description : undefined}
             />
-            {errors.productDetail && (
-              <span className={cx("errorMessage")}>
-                {errors.productDetail?.message}
-              </span>
-            )}
           </div>
           <div className={cx("productRegisterInput")}>
-            <TextInput
+            <Input
               label="상품 가격"
-              type="text"
-              value={formattedPrice}
-              {...inputSize}
-              {...register("productPrice", {
-                required: "상품 가격을 입력해주세요",
-                valueAsNumber: true,
-              })}
-              onChange={handlePriceChange}
+              type="number"
+              {...register("price")}
+              error={errors ? errors.price : undefined}
             />
-            {errors.productPrice && (
-              <span className={cx("errorMessage")}>
-                {errors.productPrice?.message}
-              </span>
-            )}
           </div>
           {/* <div className={cx("productSelectContainer")}>
             <p className={cx("productSelectTitle")}>선택 검사</p>
