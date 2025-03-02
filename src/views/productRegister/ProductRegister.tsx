@@ -6,7 +6,6 @@ import styles from "./ProductRegister.module.scss";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 
 import Input from "@/components/Input";
 import Button from "@/component/Button/Button";
@@ -30,7 +29,6 @@ const schema = yup.object().shape({
 
 const ProductRegister = (props: propsType) => {
   const { productFn } = props;
-  const router = useRouter();
 
   const {
     register,
@@ -39,51 +37,6 @@ const ProductRegister = (props: propsType) => {
   } = useForm<addProductType>({
     resolver: yupResolver(schema),
   });
-
-  // const onSubmit: SubmitHandler<FormData> = async (data) => {
-  //   console.log(data);
-  //   try {
-  //     const hospital = data.hospitalId;
-  //     console.log("병원 이름:", hospital);
-  //     const token = localStorage.getItem("accessToken");
-  //     const priceWithoutCommas = String(formattedPrice).replace(/,/g, "");
-
-  //     const response = await fetch("/api/product", {
-  //       method: "POST",
-
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       credentials: "include",
-  //       body: JSON.stringify({
-  //         name: data.name,
-  //         description: data.description,
-  //         price: Number(priceWithoutCommas),
-  //         selective: data.selective,
-  //         hospital: hospital,
-  //       }),
-  //     });
-  //     console.log("서버 응답:", response);
-
-  //     const textResponse = await response.text();
-  //     console.log("서버 응답:", textResponse);
-
-  //     if (response.ok) {
-  //       const responseData = JSON.parse(textResponse);
-  //       alert("상품 등록이 완료되었습니다.");
-  //       console.log("상품 등록 성공:", responseData);
-  //       reset();
-  //       // router.push("/productList");
-  //     } else {
-  //       console.error("API 에러:", textResponse);
-  //       alert(`상품 등록 실패: ${textResponse}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("에러 발생:", error);
-  //     alert("폼 제출 중 에러가 발생했습니다.");
-  //   }
-  // };
 
   return (
     <div className={cx("productRegisterWrapper")}>

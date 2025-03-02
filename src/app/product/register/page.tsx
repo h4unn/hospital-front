@@ -1,12 +1,16 @@
 "use client";
 
 import React from "react";
-import ProductRegister from "@/views/productRegister/ProductRegister";
+import { useRouter } from "next/navigation";
+
 import { productService } from "@/api/services";
 
+import ProductRegister from "@/views/productRegister/ProductRegister";
+
 export default function Register() {
+  const router = useRouter();
   const productFn = async (data: productRequestType) => {
-    const response = await productService.createProduct({
+    await productService.createProduct({
       body: {
         name: data.name,
         description: data.description,
@@ -15,11 +19,9 @@ export default function Register() {
         hospitalId: data.hospitalId,
       },
     });
-    const result = response;
-    console.log(result);
-
-    return result;
+    router.push("/product");
   };
+
   return (
     <>
       <ProductRegister productFn={productFn} />
