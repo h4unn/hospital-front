@@ -11,7 +11,6 @@ import { useForm } from "react-hook-form";
 
 import Input from "@/components/Input";
 import Button from "@/component/Button/Button";
-import { postLogin } from "@/service/user";
 
 const cx = cn.bind(styles);
 
@@ -19,8 +18,13 @@ type LoginFormType = {
   email: string;
   password: string;
 };
+type loginViewProps = {
+  loginFn: (data: LoginFormType) => void;
+};
 
-const LoginView = () => {
+const LoginView = (props: loginViewProps) => {
+  const { loginFn } = props;
+
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -33,6 +37,7 @@ const LoginView = () => {
       .required()
       .min(6, "비밀번호는 6자 이상이어야 합니다"),
   });
+
   const {
     register,
     handleSubmit,
@@ -42,20 +47,10 @@ const LoginView = () => {
     mode: "onBlur",
   });
 
-  // const router = useRouter();
-
-  async function onSubmit(data: LoginFormType) {
-    const response = await postLogin(data);
-    const result = response.data;
-    if (result) {
-      localStorage.setItem("accessToken", result.data);
-    }
-  }
-
   return (
     <div className={cx("login_wrap")}>
       <h1 className={cx("tit")}>로그인</h1>
-      <form className={cx("login_form")} onSubmit={handleSubmit(onSubmit)}>
+      <form className={cx("login_form")} onSubmit={handleSubmit(loginFn)}>
         <Input
           label="아이디"
           type="email"
@@ -86,12 +81,11 @@ const LoginView = () => {
           </Link>
         </div>
       </form>
-
-      <div className={cx("password_help")}>
+      {/* <div className={cx("password_help")}>
         <Link href="/forgot-password" className={cx("forgot_password")}>
           비밀번호를 잊으셨나요?
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };
