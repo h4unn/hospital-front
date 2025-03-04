@@ -68,28 +68,7 @@ const ProductRegister = (props: propsType) => {
               error={errors ? errors.price : undefined}
             />
           </div>
-          {/* <div className={cx("productSelectContainer")}>
-            <p className={cx("productSelectTitle")}>선택 검사</p>
-            <div className={cx("productSelect")}>
-              {selectOptions.map((option, index) => (
-                <label key={index}>
-                  <input
-                    type="checkbox"
-                    value={option}
-                    {...register("selective", {
-                      required: "항목을 선택해주세요",
-                    })}
-                  />
-                  {option}
-                </label>
-              ))}
-            </div>
-            {errors.selective && (
-              <span className={cx("errorMessage")}>
-                {errors.selective?.message}
-              </span>
-            )}
-          </div> */}
+
           <div className={cx("registerBtn")}>
             <Button
               label="등록하기"

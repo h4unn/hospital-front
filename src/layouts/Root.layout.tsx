@@ -21,13 +21,13 @@ export default function RootLayout(props: React.PropsWithChildren) {
   return (
     <html lang="ko">
       <body>
-        <div className={cx("hospitalWrap")}>
+        <div className={cx("EasyCareWrapper")}>
           <Header />
-          <div className={cx("hospitalInn")}>{children}</div>
+          <div className={cx("EasyCareInn")}>{children}</div>
           <div className={cx("fablInn")}>
             <Fab />
           </div>
-          <Bottom />
+          {/* <Bottom /> */}
         </div>
       </body>
     </html>

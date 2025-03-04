@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosInstance } from "axios";
 
 // 상품 관련 API 경로 정의
@@ -16,18 +17,24 @@ const PRODUCT_ROUTES = {
 
 export class ProductService {
   private _ajax: AxiosInstance;
-
   constructor(_ajax: AxiosInstance) {
     this._ajax = _ajax;
   }
 
   // 상품 조회
-  // async getProducts(req: getProductsRequest): Promise<getProductsResponse> {
-  //   const { path } = req;
-  //   const url = pathToUrl(PRODUCT_ROUTES.GET_PRODUCTS, path);
-  //   const { data } = await this._ajax.get(url);
-  //   return data;
-  // }
+  async getProducts(): Promise<any> {
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
+      this._ajax.defaults.headers.Authorization = `Bearer ${token}`;
+    } else {
+      // 토큰이 없는 경우 처리 (예: 로그인 페이지로 리다이렉트)
+      throw new Error("No access token found");
+    }
+
+    const { data } = await this._ajax.get(PRODUCT_ROUTES.GET_PRODUCTS);
+    return data;
+  }
 
   // 상품 상세 조회
   //   async getProductById(
