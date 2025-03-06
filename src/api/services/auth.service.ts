@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosInstance } from "axios";
 
 const AUTH_ROUTES = {
@@ -21,5 +22,14 @@ export class AuthService {
     const { body } = req;
     const { data } = await this._ajax.post(AUTH_ROUTES.LOGIN, body);
     return data;
+  }
+  async getMyInfo(): Promise<any> {
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
+      this._ajax.defaults.headers.Authorization = `Bearer ${token}`;
+    } else {
+      throw new Error("No access token found");
+    }
   }
 }
