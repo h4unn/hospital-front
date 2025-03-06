@@ -28,7 +28,6 @@ export class ProductService {
     if (token) {
       this._ajax.defaults.headers.Authorization = `Bearer ${token}`;
     } else {
-      // 토큰이 없는 경우 처리 (예: 로그인 페이지로 리다이렉트)
       throw new Error("No access token found");
     }
 
@@ -37,14 +36,24 @@ export class ProductService {
   }
 
   // 상품 상세 조회
-  //   async getProductById(
-  //     req: getProductByIdRequest
-  //   ): Promise<getProductByIdResponse> {
-  //     const { path } = req;
-  //     const url = pathToUrl(PRODUCT_ROUTES.GET_PRODUCT, path);
-  //     const { data } = await this._ajax.get(url);
-  //     return data;
-  //   }
+  async getProductById(
+    req: getProductByIdRequest
+  ): Promise<getProductByIdResponse> {
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
+      this._ajax.defaults.headers.Authorization = `Bearer ${token}`;
+    } else {
+      throw new Error("No access token found");
+    }
+
+    const { id } = req;
+    const { data } = await this._ajax.get(
+      PRODUCT_ROUTES.GET_PRODUCT.replace(":productId", id)
+    );
+
+    return data;
+  }
 
   // 상품 생성
   async createProduct(req: productRequest): Promise<productResponseType> {

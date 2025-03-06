@@ -17,3 +17,9 @@ type productResponseType = {
   price: number;
   hospitalId: string;
 };
+
+type getProductByIdRequest = {
+  id: string;
+};
+
+type getProductByIdResponse = { data: IProduct };

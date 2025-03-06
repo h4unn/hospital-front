@@ -1,12 +1,12 @@
 interface IProduct {
-  __v: number;
-  _id: string;
-  createdAt: string;
+  __v?: number;
+  _id?: string;
+  createdAt?: string;
   description: string;
-  hospitalId: { _id: string };
+  hospitalId?: { _id: string };
   id: string;
   name: string;
   price: number;
-  selective: any;
-  updatedAt: string;
+  selective?: string[];
+  updatedAt?: string;
 }

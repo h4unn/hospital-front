@@ -4,18 +4,19 @@ import styles from "./Item.module.scss";
 const cx = cn.bind(styles);
 
 type ItemProps = {
+  id?: string;
   title: string;
   description: string;
   price: number;
   selective?: string[];
   className?: string;
-  onClick: () => void;
+  onClick: (id: string) => void;
 };
 
 export default function Item(props: ItemProps) {
-  const { title, description, price, selective } = props;
+  const { id, title, description, price, selective, onClick } = props;
   return (
-    <li className={cx("Item")}>
+    <li className={cx("Item")} onClick={() => onClick(id)}>
       <div className={cx("ItemContent")}>
         <h3 className={cx("ItemTitle")}>{title}</h3>
         <p className={cx("ItemDescription")}>{description}</p>
