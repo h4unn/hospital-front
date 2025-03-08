@@ -16,19 +16,22 @@ type addProductType = {
   name: string;
   description: string;
   price: number;
+  selective: string;
 };
 type propsType = {
   productFn: (data: productRequestType) => void;
+  data: ISelectProduct[] | undefined;
 };
 
 const schema = yup.object().shape({
   name: yup.string().required("상품 이름을 입력해주세요"),
   description: yup.string().required("상품 설명을 입력해주세요"),
   price: yup.number().required("상품 가격을 입력해주세요"),
+  selective: yup.string().required("상품을 선택해주세요"),
 });
 
 const ProductRegister = (props: propsType) => {
-  const { productFn } = props;
+  const { productFn, data } = props;
 
   const {
     register,
@@ -46,38 +49,36 @@ const ProductRegister = (props: propsType) => {
           className={cx("productRegisterContainer")}
           onSubmit={handleSubmit(productFn)}
         >
-          <div className={cx("productRegisterInput")}>
-            <Input
-              label="상품 이름"
-              {...register("name")}
-              error={errors ? errors.name : undefined}
-            />
-          </div>
-          <div className={cx("productRegisterInput")}>
-            <Input
-              label="상품 설명"
-              {...register("description")}
-              error={errors ? errors.description : undefined}
-            />
-          </div>
-          <div className={cx("productRegisterInput")}>
-            <Input
-              label="상품 가격"
-              type="number"
-              {...register("price")}
-              error={errors ? errors.price : undefined}
-            />
-          </div>
-
-          <div className={cx("registerBtn")}>
-            <Button
-              label="등록하기"
-              backgroundColor="#FFEA3C"
-              borderColor="#BFC662"
-              disabled={isSubmitting}
-              type="submit"
-            />
-          </div>
+          <Input
+            label="상품 이름"
+            {...register("name")}
+            error={errors ? errors.name : undefined}
+          />
+          <Input
+            label="상품 설명"
+            {...register("description")}
+            error={errors ? errors.description : undefined}
+          />
+          <Input
+            label="상품 가격"
+            type="number"
+            {...register("price")}
+            error={errors ? errors.price : undefined}
+          />
+          <select {...register("selective")}>
+            {data?.map((product) => (
+              <option key={product._id} value={product._id}>
+                {product.name}
+              </option>
+            ))}
+          </select>
+          <Button
+            label="등록하기"
+            backgroundColor="#FFEA3C"
+            borderColor="#BFC662"
+            disabled={isSubmitting}
+            type="submit"
+          />
         </form>
       </section>
     </div>

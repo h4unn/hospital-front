@@ -22,8 +22,6 @@ export default function ProductList() {
     return <div>{error.message}</div>;
   }
 
-  console.log(data.data);
-
   return (
     <React.Fragment>
       <ProductListView products={data.data} />

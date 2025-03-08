@@ -4,11 +4,11 @@ import styles from "./Item.module.scss";
 const cx = cn.bind(styles);
 
 type ItemProps = {
-  id?: string;
+  id: string;
   title: string;
   description: string;
   price: number;
-  selective?: string[];
+  selective?: { _id: string; name: string; price: number };
   className?: string;
   onClick: (id: string) => void;
 };
@@ -22,11 +22,7 @@ export default function Item(props: ItemProps) {
         <p className={cx("ItemDescription")}>{description}</p>
         <p className={cx("ItemPrice")}>{price}</p>
         {selective && (
-          <ol className={cx("ItemSelective")}>
-            {selective.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ol>
+          <div className={cx("ItemSelective")}>{selective.name}</div>
         )}
       </div>
     </li>

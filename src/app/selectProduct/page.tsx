@@ -1,18 +1,27 @@
-import { useMutation } from "@tanstack/react-query";
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
 
 import { selectProductService } from "@/api/services";
 
-import SelectProduct from "@/views/SelectProduct";
+import SelectProductList from "@/views/SelectProductList";
+import Loading from "@/components/Loading";
 import Section from "@/components/UI/Section";
 
-export default function SelectProductPage() {
-  const { mutate } = useMutation<ISelectProduct, Error, productResponseType>({
-    mutationFn: (data) => selectProductService.createSelectProduct(data),
+export default function SelectProductListPage() {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["selectProduct", "getSelectProducts"],
+    queryFn: () => selectProductService.getSelectProducts(),
   });
+
+  console.log(data);
+
+  if (isLoading) return <Loading />;
+  if (isError) return <div>{error.message}</div>;
 
   return (
     <Section title="선택 상품">
-      <SelectProduct mutation={mutate} />
+      <SelectProductList data={data} />
     </Section>
   );
 }

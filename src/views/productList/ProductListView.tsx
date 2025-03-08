@@ -28,7 +28,7 @@ const ProductListView: React.FC<ProductListViewProps> = ({ products }) => {
             title={product.name}
             description={product.description}
             price={product.price}
-            selective={product.selective}
+            selective={product.selective || undefined}
             className={cx("ProductItem")}
             onClick={handleClick}
           />

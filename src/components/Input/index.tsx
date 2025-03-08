@@ -39,7 +39,7 @@ export default function Input(props: InputProps) {
   } = props;
 
   return (
-    <div className={cx("inputWrapper")}>
+    <div className={cx("InputContainer")}>
       <label className={cx("inputTitle")}>
         {label}
         {requiredSymbol && (

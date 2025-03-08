@@ -22,7 +22,7 @@ export class SelectProductService {
   }
 
   // 상품 조회
-  async getSelectProducts(): Promise<any> {
+  async getSelectProducts(): Promise<ISelectProduct[]> {
     const token = localStorage.getItem("accessToken");
 
     if (token) {
@@ -34,7 +34,8 @@ export class SelectProductService {
     const { data } = await this._ajax.get(
       SELECT_PRODUCT_ROUTES.GET_SELECTPRODUCTS
     );
-    return data;
+
+    return data.data;
   }
 
   // 상품 상세 조회
@@ -58,8 +59,12 @@ export class SelectProductService {
   }
 
   // 상품 생성
-  async createSelectProduct(req: productRequest): Promise<productResponseType> {
-    const { body } = req;
+  async createSelectProduct(req: {
+    name: string;
+    description: string;
+    price: number;
+  }): Promise<productResponseType> {
+    const { name, description, price } = req;
     const token = localStorage.getItem("accessToken");
 
     if (!token) {
@@ -69,7 +74,11 @@ export class SelectProductService {
 
     const { data } = await this._ajax.post(
       SELECT_PRODUCT_ROUTES.CREATE_PRODUCT,
-      body
+      {
+        name,
+        description,
+        price,
+      }
     );
     return data;
   }

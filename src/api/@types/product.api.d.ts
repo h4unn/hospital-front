@@ -2,7 +2,7 @@ type productRequestType = {
   name: string;
   description: string;
   price: number;
-  selective?: string[];
+  selective: string;
   hospitalId?: string;
 };
 
@@ -15,6 +15,7 @@ type productResponseType = {
   name: string;
   description: string;
   price: number;
+  selective: string;
   hospitalId: string;
 };
 
