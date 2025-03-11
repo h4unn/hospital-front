@@ -9,7 +9,7 @@ type InputProps = {
   label?: string;
   type?: "text" | "password" | "email" | "number" | "hidden" | "textarea";
   placeholder?: string;
-  requiredSymbol?: React.ReactNode;
+  required?: boolean;
   width?: string | number;
   height?: string | number;
   disabled?: boolean;
@@ -30,7 +30,7 @@ export default function Input(props: InputProps) {
     label,
     type = "text",
     placeholder,
-    requiredSymbol,
+    required,
     error,
     disabled,
     onChange,
@@ -40,16 +40,14 @@ export default function Input(props: InputProps) {
 
   return (
     <div className={cx("InputContainer")}>
-      <label className={cx("inputTitle")}>
+      <label className={cx("InputTitle")}>
         {label}
-        {requiredSymbol && (
-          <span className={cx("requiredSymbol")}>{requiredSymbol}</span>
-        )}
+        {required && <span className={cx("RequiredSymbol")}>*</span>}
       </label>
       {type === "textarea" ? (
         <>
           <textarea
-            className={cx("inputContent", { error: !!error, disabled })}
+            className={cx("TextAreaContent", { error: !!error, disabled })}
             placeholder={placeholder}
             disabled={disabled}
             onChange={onChange}
@@ -62,7 +60,7 @@ export default function Input(props: InputProps) {
         <>
           <input
             type={type}
-            className={cx("inputContent", { error: !!error, disabled })}
+            className={cx("InputContent", { error: !!error, disabled })}
             placeholder={placeholder}
             disabled={disabled}
             onChange={onChange}

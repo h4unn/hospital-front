@@ -1,10 +1,7 @@
+"use client";
 import ReservationView from "@/views/reservation/ReservationView";
 const Home = () => {
-  return (
-    <>
-      <ReservationView />
-    </>
-  );
+  return <ReservationView />;
 };
 
 export default Home;
