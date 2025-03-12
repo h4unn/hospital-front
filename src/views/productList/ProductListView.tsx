@@ -10,8 +10,12 @@ const cx = cn.bind(styles);
 
 type ProductListViewProps = {
   products: IProduct[];
+  onClick?: (id: string) => void;
 };
-const ProductListView: React.FC<ProductListViewProps> = ({ products }) => {
+const ProductListView: React.FC<ProductListViewProps> = ({
+  products,
+  onClick,
+}) => {
   const router = useRouter();
 
   function handleClick(id: string) {
@@ -30,7 +34,7 @@ const ProductListView: React.FC<ProductListViewProps> = ({ products }) => {
             price={product.price}
             selective={product.selective || undefined}
             className={cx("ProductItem")}
-            onClick={handleClick}
+            onClick={onClick ? onClick : handleClick}
           />
         ))}
       </ul>

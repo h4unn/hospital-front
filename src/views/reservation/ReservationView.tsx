@@ -3,16 +3,19 @@
 import React from "react";
 import cn from "classnames/bind";
 import styles from "./Reservation.module.scss";
+import Image from "next/image";
+import medicareImage1 from "@/assets/medicar_1.png";
+import medicareImage2 from "@/assets/medicar_2.png";
+import { useRouter } from "next/navigation";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useReservationStore } from "@/store";
-import { reservationType } from "@/store";
 
 import Section from "@/components/UI/Section";
 import Input from "@/components/Input";
-import DaumPostcode from "react-daum-postcode";
+// import DaumPostcode from "react-daum-postcode";
 import Calander from "@/component/Calander/Calander";
 import Button from "@/component/Button/Button";
 
@@ -41,9 +44,8 @@ type ReservationFormData = {
 };
 
 const ReservationView: React.FC = () => {
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
-    undefined
-  );
+  const router = useRouter();
+  const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
 
   const {
     register,
@@ -53,7 +55,6 @@ const ReservationView: React.FC = () => {
 
   const setReservation = useReservationStore((state) => state.setReservation);
   const reservation = useReservationStore((state) => state.userReservation);
-  console.log(reservation.userType);
 
   const onSubmit: SubmitHandler<ReservationFormData> = (data) => {
     setReservation({
@@ -64,6 +65,8 @@ const ReservationView: React.FC = () => {
       reserveType: data.reserveType,
       reservationDate: selectedDate ?? new Date(),
     });
+
+    router.push("/hospitalList");
   };
 
   return (
@@ -133,22 +136,45 @@ const ReservationView: React.FC = () => {
               />
             </div>
             <div className={cx("ReserveType")}>
-              <label>
+              <label
+                className={cx("ReserveTypeLabel", {
+                  active: reservation.reserveType === "combined",
+                })}
+              >
+                <span>종합검진</span>
+                <Image
+                  src={medicareImage1}
+                  alt="예약조회"
+                  className={cx("loginIcon")}
+                  width={72}
+                  height={72}
+                />
                 <input
                   type="radio"
                   value="combined"
                   {...register("reserveType")}
-                  defaultChecked
+                  onClick={() => setReservation({ reserveType: "combined" })}
                 />
-                종합검진
               </label>
-              <label>
+              <label
+                className={cx("ReserveTypeLabel", {
+                  active: reservation.reserveType === "public",
+                })}
+              >
+                <span>공단검진</span>
+                <Image
+                  src={medicareImage2}
+                  alt="예약조회"
+                  className={cx("loginIcon")}
+                  width={72}
+                  height={72}
+                />
                 <input
                   type="radio"
                   value="public"
                   {...register("reserveType")}
+                  onClick={() => setReservation({ reserveType: "public" })}
                 />
-                공단검진
               </label>
             </div>
           </div>
@@ -157,7 +183,7 @@ const ReservationView: React.FC = () => {
             label="예약하기"
             backgroundColor="#FFEA3C"
             borderColor="#BFC662"
-            disabled={isSubmitting}
+            disabled={isSubmitting || Object.keys(errors).length > 0}
             type="submit"
           />
         </form>
