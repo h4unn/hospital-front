@@ -18,6 +18,11 @@
     border: 1px solid var(--gray200);
     border-radius: 8px;
     padding: 8px;
+
+    &:read-only {
+      cursor: not-allowed;
+      background-color: var(--gray100);
+    }
   }
 
   .errorMessage {

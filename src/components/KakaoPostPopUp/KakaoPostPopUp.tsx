@@ -1,4 +1,5 @@
 import { useDaumPostcodePopup } from "react-daum-postcode";
+import Button from "@/component/Button/Button";
 type KakaoPostPopUpProps = {
   setAddress?: React.Dispatch<React.SetStateAction<string>>;
   setDetailAddress?: React.Dispatch<React.SetStateAction<string>>;
@@ -43,9 +44,13 @@ const KakaoPostPopUp: React.FC<KakaoPostPopUpProps> = ({
   };
 
   return (
-    <button type="button" onClick={handleClick}>
-      Open
-    </button>
+    <Button
+      label="검색"
+      type="button"
+      onClick={handleClick}
+      backgroundColor={"#FFEA3C"}
+      borderColor={"#BFC662"}
+    />
   );
 };
 export default KakaoPostPopUp;

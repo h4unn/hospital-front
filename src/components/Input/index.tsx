@@ -14,7 +14,8 @@ type InputProps = {
     | "number"
     | "hidden"
     | "textarea"
-    | "date";
+    | "date"
+    | "checkbox";
   placeholder?: string;
   required?: boolean;
   width?: string | number;

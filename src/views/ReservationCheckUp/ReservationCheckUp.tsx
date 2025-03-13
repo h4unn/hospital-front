@@ -8,7 +8,7 @@ import { formatDate } from "@/utils/format";
 
 import Input from "@/components/Input";
 import KakaoPostPopUp from "@/components/KakaoPostPopUp/KakaoPostPopUp";
-// import Button from "@/component/Button/Button";
+import Button from "@/component/Button/Button";
 
 const cx = cn.bind(styles);
 
@@ -43,6 +43,7 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
       <div className={cx("UserInfo")}>
         <h3>예약자 정보</h3>
         <Input
+          label="예약 희망 날짜"
           type="date"
           value={formatDate(reservation.reservationDate)}
           readOnly
@@ -69,6 +70,7 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
         </div>
         <Input label="전화번호" value={reservation.tell} readOnly />
         <Input label="이메일" type="email" />
+
         <div className={cx("PostArea")}>
           <Input label="주소" value={address} readOnly />
           <Input label="상세주소" />
@@ -76,6 +78,32 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
           <KakaoPostPopUp setAddress={setAddress} setPostcode={setPostcode} />
         </div>
       </div>
+      {productData.selective && (
+        <div className={cx("SelectiveProduct")}>
+          <h3>선택 상품</h3>
+          <label>
+            <input type="checkbox" />
+            <span>{productData.selective.name}</span>
+          </label>
+        </div>
+      )}
+
+      <div className="PriceArea">
+        <div className="PriceItem">
+          <p>패키지비용</p>
+          <p>{productData.price}</p>
+        </div>
+        <div className="PriceItem">
+          <p>총 검진 비용</p>
+          <p>{productData.price + (productData.selective?.price || 0)}</p>
+        </div>
+      </div>
+      <Button
+        type="submit"
+        label={"건강검진 예약"}
+        backgroundColor={"#FFEA3C"}
+        borderColor={"#BFC662"}
+      />
     </form>
   );
 };
