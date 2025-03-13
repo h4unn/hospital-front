@@ -3,7 +3,7 @@ interface IProduct {
   _id: string;
   createdAt?: string;
   description: string;
-  hospitalId?: { _id: string };
+  hospitalId: { _id: string };
   id: string;
   name: string;
   price: number;

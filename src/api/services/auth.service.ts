@@ -35,7 +35,7 @@ export class AuthService {
     }
   }
 
-  async getUserAdmin({ id }: { id: string }): Promise<loginResponseType> {
+  async getUserAdmin({ id }: { id: string }): Promise<userResposenType> {
     const token = localStorage.getItem("accessToken");
 
     if (token) {

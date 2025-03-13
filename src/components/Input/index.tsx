@@ -7,7 +7,14 @@ const cx = cn.bind(styles);
 
 type InputProps = {
   label?: string;
-  type?: "text" | "password" | "email" | "number" | "hidden" | "textarea";
+  type?:
+    | "text"
+    | "password"
+    | "email"
+    | "number"
+    | "hidden"
+    | "textarea"
+    | "date";
   placeholder?: string;
   required?: boolean;
   width?: string | number;

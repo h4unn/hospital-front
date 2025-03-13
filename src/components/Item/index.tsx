@@ -6,6 +6,7 @@ const cx = cn.bind(styles);
 type ItemProps = {
   id: string;
   title: string;
+  hospitalId?: string;
   description: string;
   price: number;
   selective?: { _id: string; name: string; price: number };

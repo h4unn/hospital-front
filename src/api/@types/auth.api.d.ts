@@ -49,3 +49,7 @@ type loginResponse = {
 type loginResponseType = {
   data: loginResponse;
 };
+
+type userResposenType = {
+  data: ILoginResponse;
+};

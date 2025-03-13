@@ -21,6 +21,7 @@ const ProductListView: React.FC<ProductListViewProps> = ({
   function handleClick(id: string) {
     router.push(`product/${id}`);
   }
+  console.log(products);
 
   return (
     <Section title={"병원 상품"} className={cx("ProductListWrapper")}>
