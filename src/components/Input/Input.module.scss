@@ -1,0 +1,32 @@
+.InputContainer {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  gap: 8px;
+
+  .InputTitle {
+    display: flex;
+    gap: 8px;
+
+    .RequiredSymbol {
+      color: red;
+    }
+  }
+
+  .InputContent {
+    width: 100%;
+    border: 1px solid var(--gray200);
+    border-radius: 8px;
+    padding: 8px;
+
+    &:read-only {
+      cursor: not-allowed;
+      background-color: var(--gray100);
+    }
+  }
+
+  .errorMessage {
+    color: var(--errors);
+    font-size: 0.8rem;
+  }
+}

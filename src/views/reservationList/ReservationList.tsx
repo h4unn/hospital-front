@@ -3,7 +3,7 @@
 import React from "react";
 import cn from "classnames/bind";
 import styles from "./ReservationList.module.scss";
-import Button from "@/components/Button/Button";
+import Button from "@/component/Button/Button";
 import axios from "axios";
 // import { useRouter } from "next/navigation";
 

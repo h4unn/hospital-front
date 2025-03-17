@@ -1,0 +1,16 @@
+.btn {
+    font-size: 18px;
+    font-weight: bold;
+    width: 176px;
+    height: 45px;
+    border-radius: 24px;
+    cursor: pointer;
+
+    &.disabled {
+        background-color: var(--gray100) !important;
+        color: var(--gray200);
+        cursor: not-allowed;
+    }
+
+
+}

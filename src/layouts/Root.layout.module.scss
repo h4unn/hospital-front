@@ -1,33 +1,34 @@
-.hospitalWrap {
+.EasyCareWrapper {
     min-height: 100vh;
     background-color: var(--sub-color);
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     flex-direction: column;
+    align-items: center;
 
-    .hospitalInn {
+
+    .EasyCareInn {
         max-width: 1920px;
+        width: 100%;
         display: flex;
+        flex: 1;
         flex-direction: column;
         align-items: center;
+        position: relative;
+        z-index: 1;
     }
 
-    &::after {
+    &:after {
         content: "";
         display: block;
         width: 100%;
-        height: calc(100% - 433px);
+        height: calc(100% - 300px);
         position: absolute;
         bottom: 0;
         left: 0;
         background-color: #fff;
         z-index: 0;
-    }
-
-    .hospitalInn {
-        position: relative;
-        z-index: 1;
     }
 
     .fablInn {
