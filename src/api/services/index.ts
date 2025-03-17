@@ -19,7 +19,7 @@ export const setToken = (token: {
 };
 
 const apiServer = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: process.env.BASE_URL,
   withCredentials: true,
   timeout: 3000,
   headers: {
