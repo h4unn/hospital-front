@@ -2,6 +2,7 @@
 
 import React from "react";
 import cn from "classnames/bind";
+import Image from "next/image";
 import styles from "./Fab.module.scss";
 import Link from "next/link";
 const cx = cn.bind(styles);
@@ -11,7 +12,7 @@ const Fab = () => {
     <div className={cx("fabWrapper")}>
       <Link href="productList">
         <div className={cx("fabButton")}>
-          <img
+          <Image
             src="/images/reservation.png"
             alt="검진예약"
             className={cx("reservation")}
@@ -21,7 +22,11 @@ const Fab = () => {
       </Link>
       <Link href="reservationCheck">
         <div className={cx("fabButton")}>
-          <img src="/images/check.png" alt="예약조회" className={cx("check")} />
+          <Image
+            src="/images/check.png"
+            alt="예약조회"
+            className={cx("check")}
+          />
           <span>예약조회</span>
         </div>
       </Link>

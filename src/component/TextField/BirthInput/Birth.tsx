@@ -31,24 +31,6 @@ const Birth: React.FC<BirthProps> = ({ value = "", onBirthChange }) => {
     return new Date(currentYear, month, 0).getDate();
   };
 
-  // useEffect(() => {
-  //   if (month) {
-  //     const daysInMonth = getDaysInMonth(Number(month));
-  //     if (Number(day) > daysInMonth) {
-  //       setDay("");
-  //     }
-  //   }
-  // }, [month]);
-
-  // useEffect(() => {
-  //   if (month && Number(day)) {
-  //     const daysInMonth = getDaysInMonth(Number(month));
-  //     if (Number(day) > daysInMonth) {
-  //       setDay("");
-  //     }
-  //   }
-  // }, [month, day]);
-
   useEffect(() => {
     // value 초기화
     if (value) {
@@ -57,7 +39,7 @@ const Birth: React.FC<BirthProps> = ({ value = "", onBirthChange }) => {
       setMonth(month || "");
       setDay(day || "");
     }
-  }, [value]);
+  }, [value, onBirthChange, year, month, day]);
 
   useEffect(() => {
     if (year && month && day) {
