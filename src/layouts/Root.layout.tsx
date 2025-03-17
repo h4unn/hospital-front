@@ -2,7 +2,6 @@
 import React from "react";
 import { Metadata } from "next";
 import Header from "@/component/Header/Header";
-import Bottom from "@/component/Bottom/Bottom";
 import cn from "classnames/bind";
 import styles from "@/layouts/Root.layout.module.scss";
 import "../style/globals.css";

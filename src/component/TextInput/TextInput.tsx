@@ -103,7 +103,7 @@ const Input = (props: InputProps) => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setText(e.target.value);
       props.onChange?.(e);
-      onChange?.(e.target.value);
+      onChange?.(e);
     },
     [onChange, props]
   );
