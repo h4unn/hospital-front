@@ -1,6 +1,6 @@
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+export const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
@@ -13,5 +13,3 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   },
 };
-
-export default nextConfig;
