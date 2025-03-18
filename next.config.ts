@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/api/:path*",
-        destination: "http://52.79.233.55:4000/api/:path*",
+        destination: "https://52.79.233.55:4000/api/:path*",
       },
     ];
   },
