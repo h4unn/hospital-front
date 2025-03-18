@@ -19,11 +19,12 @@ export const setToken = (token: {
 };
 
 const apiServer = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: process.env.BASE_URL || "http://52.79.233.55:4000",
   withCredentials: true,
-  timeout: 3000,
+  timeout: 5000,
   headers: {
     "Content-Type": "application/json",
+    Accept: "application/json",
   },
 });
 
