@@ -13,6 +13,8 @@ const Fab = () => {
       <Link href="productList">
         <div className={cx("fabButton")}>
           <Image
+            width={47}
+            height={60}
             src="/images/reservation.png"
             alt="검진예약"
             className={cx("reservation")}
@@ -23,6 +25,8 @@ const Fab = () => {
       <Link href="reservationCheck">
         <div className={cx("fabButton")}>
           <Image
+            width={47}
+            height={60}
             src="/images/check.png"
             alt="예약조회"
             className={cx("check")}

@@ -22,7 +22,6 @@ export class AuthService {
   async login(req: loginRequestType): Promise<loginResponseType> {
     const { body } = req;
     const { data } = await this._ajax.post(AUTH_ROUTES.LOGIN, body);
-    console.log(data);
     return data;
   }
 

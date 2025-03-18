@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <div className={cx("HeaderWrapper")}>
       <div className={cx("HeaderInn")}>
-        <Link href={"http://localhost:3000"}>
+        <Link href={"/"}>
           <p className={cx("imageBox")}>
             <Image
               src={headerLogo}
