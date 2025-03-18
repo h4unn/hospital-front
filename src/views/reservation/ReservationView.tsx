@@ -42,7 +42,7 @@ type ReservationFormData = {
   tell: string;
   reserveType: "combined" | "public";
 };
-console.log("ReservationView.tsx");
+
 const ReservationView: React.FC = () => {
   const router = useRouter();
   const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
