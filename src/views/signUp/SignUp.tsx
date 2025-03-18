@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import styles from "./Signup.module.scss";
+import styles from "./SignUp.module.scss";
 import cn from "classnames/bind";
 import { useForm } from "react-hook-form";
 import TextInput from "@/component/TextField/TextInput/TextInput";
