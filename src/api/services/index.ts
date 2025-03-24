@@ -1,3 +1,4 @@
+"use client";
 import axios from "axios";
 import { AuthService } from "./auth.service";
 import { ProductService } from "./product.service";
@@ -19,7 +20,7 @@ export const setToken = (token: {
 };
 
 const apiServer = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL || "3.35.2.159:4000",
+  baseURL: process.env.BASE_URL || "http://3.35.2.159:4000",
   withCredentials: true,
   timeout: 5000,
   headers: {
