@@ -3,7 +3,7 @@
 import ReservationView from "@/views/reservation/ReservationView";
 
 const Home = () => {
-  console.log("update4");
+  console.log("update5");
   return (
     <>
       <ReservationView />
