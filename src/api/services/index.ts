@@ -19,7 +19,7 @@ export const setToken = (token: {
 };
 
 const apiServer = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL || "http://52.79.233.55:4000",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL || "3.35.2.159:4000",
   withCredentials: true,
   timeout: 5000,
   headers: {
