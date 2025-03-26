@@ -10,7 +10,7 @@ import Link from "next/link";
 const cx = cn.bind(styles);
 
 const Header = () => {
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["User"],
     queryFn: () => authService.getMyInfo(),
     refetchOnWindowFocus: false,
