@@ -20,6 +20,7 @@ type LoginFormType = {
 };
 type loginViewProps = {
   loginFn: (data: LoginFormType) => void;
+  isError?: boolean;
 };
 
 const LoginView = (props: loginViewProps) => {
@@ -34,7 +35,7 @@ const LoginView = (props: loginViewProps) => {
       .lowercase(),
     password: yup
       .string()
-      .required()
+      .required("비밀번호를 입력해주세요")
       .min(6, "비밀번호는 6자 이상이어야 합니다"),
   });
 
@@ -63,6 +64,11 @@ const LoginView = (props: loginViewProps) => {
           {...register("password")}
           error={errors ? errors.email : undefined}
         />
+        {props.isError && (
+          <p className={cx("errorMessage", "LoginFailed")}>
+            입력하신 정보를 확인해주세요.
+          </p>
+        )}
         <div className={cx("button_group")}>
           <Button
             type="submit"
@@ -81,11 +87,6 @@ const LoginView = (props: loginViewProps) => {
           </Link>
         </div>
       </form>
-      {/* <div className={cx("password_help")}>
-        <Link href="/forgot-password" className={cx("forgot_password")}>
-          비밀번호를 잊으셨나요?
-        </Link>
-      </div> */}
     </div>
   );
 };

@@ -21,8 +21,13 @@ export class AuthService {
 
   async login(req: loginRequestType): Promise<loginResponseType> {
     const { body } = req;
-    const { data } = await this._ajax.post(AUTH_ROUTES.LOGIN, body);
-    return data;
+    try {
+      const { data } = await this._ajax.post(AUTH_ROUTES.LOGIN, body);
+
+      return data;
+    } catch {
+      throw new Error("로그인 실패");
+    }
   }
 
   async getMyInfo(): Promise<any> {
@@ -33,6 +38,8 @@ export class AuthService {
     } else {
       throw new Error("No access token found");
     }
+    const { data } = await this._ajax.get(`/api/admin/me`);
+    return data;
   }
 
   async getUserAdmin({ id }: { id: string }): Promise<userResposenType> {

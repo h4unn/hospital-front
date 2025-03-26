@@ -46,3 +46,13 @@ export const useReservationStore = create<ReservationState>((set) => ({
       userReservation: { ...state.userReservation, ...userReservation },
     })),
 }));
+
+export const loginUserStore = create((set) => {
+  return {
+    accessToken: localStorage.getItem("accessToken"),
+    setAccessToken: (token: string) => {
+      localStorage.setItem("accessToken", token);
+      set({ accessToken: token });
+    },
+  };
+});

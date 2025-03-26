@@ -8,9 +8,9 @@ const HospitalRootLayout = (props: React.PropsWithChildren) => {
   const queryClient = new QueryClient();
 
   return (
-    <RootLayout>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </RootLayout>
+    <QueryClientProvider client={queryClient}>
+      <RootLayout>{children}</RootLayout>
+    </QueryClientProvider>
   );
 };
 
