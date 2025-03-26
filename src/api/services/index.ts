@@ -19,7 +19,7 @@ export const setToken = (token: {
   };
 };
 
-console.log(process.env.NEXT_PUBLIC_BASE_URL, process);
+console.log(process);
 
 const apiServer = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
