@@ -10,18 +10,20 @@ const cx = cn.bind(styles);
 
 type ProductListViewProps = {
   products: IProduct[];
+  admin: ILoginResponse;
   onClick?: (id: string) => void;
 };
 const ProductListView: React.FC<ProductListViewProps> = ({
   products,
+  admin,
   onClick,
 }) => {
   const router = useRouter();
+  console.log(admin);
 
   function handleClick(id: string) {
     router.push(`product/${id}`);
   }
-  console.log(products);
 
   return (
     <Section title={"병원 상품"} className={cx("ProductListWrapper")}>
@@ -31,6 +33,7 @@ const ProductListView: React.FC<ProductListViewProps> = ({
             key={product.id}
             id={product._id}
             title={product.name}
+            hospital={admin.hospital}
             description={product.description}
             price={product.price}
             selective={product.selective || undefined}

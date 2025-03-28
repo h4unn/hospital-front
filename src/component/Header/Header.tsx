@@ -1,24 +1,37 @@
 import React from "react";
 import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
-import { authService } from "@/api/services";
+import Link from "next/link";
+
 import cn from "classnames/bind";
 import styles from "./Header.module.scss";
+import { useQuery, useMutation } from "@tanstack/react-query";
+
+import { authService } from "@/api/services";
 import headerLogo from "../../../public/images/easycare2.png";
-import Link from "next/link";
+import LoginBox from "./LoginBox";
 
 const cx = cn.bind(styles);
 
 const Header = () => {
-  const { data } = useQuery({
+  const { data: user, isLoading } = useQuery({
     queryKey: ["User"],
-    queryFn: () => authService.getMyInfo(),
+    queryFn: async () => {
+      const response = await authService.getMyInfo();
+      return response.data;
+    },
     refetchOnWindowFocus: false,
     gcTime: 5 * 10 * 1000,
     staleTime: 5 * 10 * 1000,
   });
 
-  const dataName = data?.data?.name;
+  const logoutMutation = useMutation({
+    mutationFn: async () => authService.logout(),
+    onSuccess: () => {
+      localStorage.removeItem("accessToken");
+      window.location.href = "/login";
+    },
+  });
+
   return (
     <div className={cx("HeaderWrapper")}>
       <div className={cx("HeaderInn")}>
@@ -33,7 +46,7 @@ const Header = () => {
         </Link>
 
         <div className={cx("loginContainer")}>
-          {!data ? (
+          {!user ? (
             <Link href={"/login"}>
               <div className={cx("imageBox")}>
                 <Image
@@ -47,9 +60,9 @@ const Header = () => {
               </div>
             </Link>
           ) : (
-            <div className={cx("loginBox")}>
-              <p>안녕하세요. {dataName}님</p>
-            </div>
+            !isLoading && (
+              <LoginBox user={user} logoutMutation={logoutMutation} />
+            )
           )}
         </div>
       </div>

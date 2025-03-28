@@ -3,12 +3,16 @@
 import React, { useEffect, useState } from "react";
 import styles from "./SignUp.module.scss";
 import cn from "classnames/bind";
+
 import { useForm } from "react-hook-form";
+
 import TextInput from "@/component/TextField/TextInput/TextInput";
 import Button from "@/component/Button/Button";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import DaumPostcode from "react-daum-postcode";
+
+interface SignupViewProps {
+  onSignup: (data: ILoginResponse) => void;
+}
 
 type AddressData = {
   zonecode: string;
@@ -39,7 +43,7 @@ type SignupFormType = {
 
 const cx = cn.bind(styles);
 
-const SignupView = () => {
+const SignupView = ({ onSignup }: SignupViewProps) => {
   const {
     register,
     handleSubmit,
@@ -48,7 +52,6 @@ const SignupView = () => {
     formState: { errors },
   } = useForm<SignupFormType>();
 
-  const router = useRouter();
   const [businessNumber, setBusinessNumber] = useState("");
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
 
@@ -91,42 +94,28 @@ const SignupView = () => {
     });
   };
 
-  const onSubmit = async (data: SignupFormType) => {
+  const onSubmit = (data: SignupFormType) => {
     if (!data.hospital.businessNumber) {
       clearErrors("hospital.businessNumber");
       return;
     }
 
-    try {
-      if (data.password !== data.passwordCheck) {
-        alert("비밀번호가 일치하지 않습니다.");
-        return;
-      }
+    if (data.password !== data.passwordCheck) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
 
-      console.log("유효한 데이터:", data);
-
-      const response = await axios.post("http://localhost:4000/api/admin", {
-        email: data.email,
-        password: data.password,
-        name: data.name,
-        address: data.hospital.address,
+    onSignup({
+      id: data.id,
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      hospital: {
         hospitalName: data.hospital.hospitalName,
         businessNumber: data.hospital.businessNumber,
-        hospital: data.hospital,
-      });
-
-      console.log("서버 응답:", response.data);
-      router.push("/login");
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const errorMessage =
-          error.response?.data?.message || "회원가입에 실패했습니다.";
-        console.error("회원가입 에러:", errorMessage);
-        alert(errorMessage);
-      } else {
-        console.error("알 수 없는 에러:", error);
-      }
-    }
+        address: `${data.hospital.address.basic}/${data.hospital.address.detail}`,
+      },
+    });
   };
 
   const openPostcode = () => {

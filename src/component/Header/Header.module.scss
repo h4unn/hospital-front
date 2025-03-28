@@ -36,13 +36,40 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            /* 텍스트와 아이콘 간 간격 */
 
             .loginIcon {
                 width: 32px;
                 height: 32px;
             }
         }
+    }
+}
 
+.LoginBox {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+    li a {
+        padding: 4px;
+        transition: .3s ease all;
+
+        &:hover {
+            color: var(--main-color);
+        }
+    }
+
+    .LogoutBtn {
+        padding: 8px 16px;
+        border: none !important;
+        width: auto;
+        height: auto;
+        font-size: .9rem;
+        transition: .3s ease all;
+
+        &:hover {
+            background-color: var(--main-color);
+            color: #000;
+        }
     }
 }

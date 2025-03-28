@@ -3,6 +3,7 @@ import { AxiosInstance } from "axios";
 
 const AUTH_ROUTES = {
   LOGIN: `/api/auth/login`,
+  SIGNUP: `/api/admin`,
   LOGOUT: `/api/auth/logout`,
   REFRESH: `/api/auth/refresh`,
   GET_ADMIN_DATA: `/api/admin`,
@@ -18,6 +19,15 @@ export class AuthService {
   constructor(_ajax: AxiosInstance) {
     this._ajax = _ajax;
   }
+  async signup(req: any): Promise<any> {
+    const { body } = req;
+    try {
+      const { data } = await this._ajax.post(AUTH_ROUTES.SIGNUP, body);
+      return data;
+    } catch {
+      throw new Error("회원가입 실패");
+    }
+  }
 
   async login(req: loginRequestType): Promise<loginResponseType> {
     const { body } = req;
@@ -30,7 +40,7 @@ export class AuthService {
     }
   }
 
-  async getMyInfo(): Promise<any> {
+  async getMyInfo(): Promise<userResposenType> {
     const token = localStorage.getItem("accessToken");
 
     if (token) {
@@ -55,5 +65,17 @@ export class AuthService {
       `${AUTH_ROUTES.GET_ADMIN_DATA}/${id}`
     );
     return data;
+  }
+
+  async logout(): Promise<void> {
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
+      this._ajax.defaults.headers.Authorization = `Bearer ${token}`;
+    } else {
+      throw new Error("No access token found");
+    }
+
+    await this._ajax.post(AUTH_ROUTES.LOGOUT);
   }
 }

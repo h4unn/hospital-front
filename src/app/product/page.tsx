@@ -2,13 +2,18 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { productService } from "@/api/services";
+import { productService, authService } from "@/api/services";
 
 import ProductListView from "@/views/productList/ProductListView";
 import Loading from "@/components/Loading";
 
 export default function ProductList() {
-  const { data, isLoading, isError, error } = useQuery({
+  const {
+    data: prodcutItems,
+    isLoading: productLoading,
+    isError: isProductError,
+    error: productError,
+  } = useQuery({
     queryKey: ["products", "list"],
     queryFn: () => productService.getProducts(),
     refetchOnWindowFocus: false,
@@ -16,15 +21,36 @@ export default function ProductList() {
     staleTime: 5 * 10 * 1000,
   });
 
-  if (isLoading) return <Loading />;
+  const {
+    data: hospitalData,
+    isLoading: hospitalLoading,
+    isError: isHospitalError,
+    error: hospitalError,
+  } = useQuery({
+    queryKey: ["products", "hospital"],
+    queryFn: () => authService.getMyInfo(),
+    refetchOnWindowFocus: false,
+    gcTime: 5 * 10 * 1000,
+    staleTime: 5 * 10 * 1000,
+  });
 
-  if (isError) {
-    return <div>{error.message}</div>;
+  if (productLoading && hospitalLoading) return <Loading />;
+
+  if (isProductError && isHospitalError) {
+    return (
+      <div>
+        <p>{productError.message}</p>
+        <p>{hospitalError.message}</p>
+      </div>
+    );
   }
 
   return (
     <React.Fragment>
-      <ProductListView products={data.data} />
+      <ProductListView
+        products={prodcutItems.data}
+        admin={hospitalData?.data || ({} as ILoginResponse)}
+      />
     </React.Fragment>
   );
 }

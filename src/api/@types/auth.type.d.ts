@@ -1,6 +1,6 @@
 interface ILoginResponse {
   /** ID */
-  id: string;
+  id?: string;
   /** 비밀번호 */
   password: string;
   /** 이름 */

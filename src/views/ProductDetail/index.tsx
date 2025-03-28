@@ -19,6 +19,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
       <div>
         <Button
           label={"돌아가기"}
+          onClick={() => window.history.back()}
           backgroundColor={"#FFEA3C"}
           borderColor={"#BFC662"}
           className={cx("ProductDetail__button")}

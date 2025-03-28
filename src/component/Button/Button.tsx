@@ -8,8 +8,8 @@ type BtnProps = {
   label: string;
   type?: "button" | "submit" | "reset";
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  backgroundColor: "#FFEA3C" | "#FFFFFF" | "#FFFCE5";
-  borderColor: "#BFC662" | "#CCCCCC";
+  backgroundColor?: "#FFEA3C" | "#FFFFFF" | "#FFFCE5";
+  borderColor?: "#BFC662" | "#CCCCCC";
   className?: string;
   disabled?: boolean;
   width?: string | number;
