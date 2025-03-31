@@ -7,10 +7,7 @@ export class OrderService {
     this._ajax = _ajax;
   }
 
-  async createOrder(data: orderRequestBody): Promise<orderRequestBody> {
-    const token = localStorage.getItem("accessToken");
-
-    const response = await this._ajax.post("/api/order", data);
-    return response.data;
+  async createOrder(data: orderRequestBody): Promise<void> {
+    await this._ajax.post("/api/order", data);
   }
 }

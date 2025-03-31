@@ -3,24 +3,20 @@ import { useRouter } from "next/navigation";
 import { useReservationStore } from "@/store";
 
 // 리디렉션 로직을 처리하는 커스텀 훅
-export const useCheckReservation = () => {
+export const useCheckReservation = (redirectPath = "/") => {
   const router = useRouter();
   const { userReservation } = useReservationStore();
 
   useEffect(() => {
-    // name, tell, reservationDate가 비어있는지 확인
-    if (
-      !userReservation.name ||
-      !userReservation.tell ||
-      !userReservation.reservation_date
-    ) {
-      router.push("/"); // 조건이 충족되지 않으면 "/"로 리디렉션
+    // 필수 필드 확인
+    const requiredFields = ["name", "tell", "birth", "reservation_date"];
+
+    const isMissingRequiredField = requiredFields.some(
+      (field) => !userReservation[field as keyof typeof userReservation]
+    );
+
+    if (isMissingRequiredField) {
+      router.push(redirectPath);
     }
-  }, [
-    userReservation.name,
-    userReservation.tell,
-    userReservation.reservation_date,
-    router,
-    ,
-  ]);
+  }, [userReservation, router, redirectPath]);
 };

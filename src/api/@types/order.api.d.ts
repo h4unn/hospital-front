@@ -12,7 +12,7 @@ type orderRequestBody = {
   total_price: number;
   memo?: string;
   reservation_date: Date;
-  reservation_time: string;
+  reservation_time?: string;
   status?: "pending" | "success" | "cancel";
 
   productId: string;

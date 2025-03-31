@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 import { productService, authService, orderService } from "@/api/services";
 
@@ -11,6 +12,7 @@ import ReservationCheckUpView from "@/views/ReservationCheckUp/ReservationCheckU
 
 export default function Reservation() {
   const { id } = useParams();
+  const router = useRouter();
 
   // 제품 데이터 가져오기
   const {
@@ -49,8 +51,9 @@ export default function Reservation() {
   const { mutate: setReservation } = useMutation({
     mutationFn: (data: orderRequestBody) => orderService.createOrder(data),
 
-    onSuccess: (data) => {
-      console.log("예약 성공", data);
+    onSuccess: () => {
+      alert("예약이 완료되었습니다.");
+      router.push("/");
     },
     onError: (error) => {
       console.error("예약 실패", error);
@@ -78,21 +81,20 @@ export default function Reservation() {
           userData={userData.data}
           onSubmit={(data) => {
             setReservation({
-              productId: data.productId,
-              hospitalId: data.hospitalId,
+              productId: productData.data._id,
+              hospitalId: userData.data._id,
               reservation_date: data.reservation_date,
-              reservation_time: data.reservation_time,
               name: data.name,
               tell: data.tell,
               birth: data.birth,
+              email: data.email,
               address: {
-                zipcode: "",
-                basic: "",
-                detail: "",
+                zipcode: data.address.zipcode,
+                basic: data.address.basic,
+                detail: data.address.detail,
               },
-              gender: "",
-              email: "",
-              total_price: 0,
+              gender: data.gender,
+              total_price: data.total_price,
             });
             // 예약 성공 후 처리
           }}
