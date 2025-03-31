@@ -47,12 +47,12 @@ export const useReservationStore = create<ReservationState>((set) => ({
     })),
 }));
 
-export const loginUserStore = create((set) => {
-  return {
-    accessToken: localStorage.getItem("accessToken"),
-    setAccessToken: (token: string) => {
-      localStorage.setItem("accessToken", token);
-      set({ accessToken: token });
-    },
-  };
-});
+// export const loginUserStore = create((set) => {
+//   return {
+//     accessToken: localStorage.getItem("accessToken"),
+//     setAccessToken: (token: string) => {
+//       localStorage.setItem("accessToken", token);
+//       set({ accessToken: token });
+//     },
+//   };
+// });

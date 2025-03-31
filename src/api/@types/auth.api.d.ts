@@ -26,6 +26,7 @@ type loginRequest = {
 };
 
 type ILoginResponse = {
+  hospitalName: ReactNode;
   id: string;
   password: string;
   name: string;

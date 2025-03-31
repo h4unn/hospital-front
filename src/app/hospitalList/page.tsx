@@ -11,7 +11,12 @@ import ProductListView from "@/views/productList/ProductListView";
 
 export default function Home() {
   const router = useRouter();
-  const { data, isLoading, isError, error } = useQuery({
+  const {
+    data: productData,
+    isLoading: productIsLoading,
+    isError: productIsError,
+    error: productError,
+  } = useQuery({
     queryKey: ["products", "list"],
     queryFn: () => productService.getProducts(),
     refetchOnWindowFocus: false,
@@ -19,21 +24,22 @@ export default function Home() {
     staleTime: 5 * 10 * 1000,
   });
 
-  // const setReservation = useReservationStore((state) => state.setReservation);
+  if (productIsLoading) return <Loading />;
 
-  if (isLoading) return <Loading />;
-
-  if (isError) {
-    return <div>{error.message}</div>;
+  if (productIsError) {
+    return (
+      <div>
+        <p>{productError.message}</p>
+      </div>
+    );
   }
 
   function handleClick(id: string) {
     router.push(`reservation/${id}`);
   }
-
   return (
     <>
-      <ProductListView products={data.data} onClick={handleClick} />
+      <ProductListView products={productData.data} onClick={handleClick} />
     </>
   );
 }

@@ -14,8 +14,6 @@ export default function SelectProductListPage() {
     queryFn: () => selectProductService.getSelectProducts(),
   });
 
-  console.log(data);
-
   if (isLoading) return <Loading />;
   if (isError) return <div>{error.message}</div>;
 

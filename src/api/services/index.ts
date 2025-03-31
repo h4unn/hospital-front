@@ -20,7 +20,8 @@ export const setToken = (token: {
 };
 
 const apiServer = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL || "https://www.h4unn.store",
+  // baseURL: process.env.NEXT_PUBLIC_BASE_URL || "https://www.h4unn.store",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8080",
   withCredentials: true,
   timeout: 5000,
   headers: {

@@ -58,7 +58,6 @@ export class ProductService {
   // 상품 생성
   async createProduct(req: productRequest): Promise<productResponseType> {
     const { body } = req;
-    console.log("body", body);
     const token = localStorage.getItem("accessToken");
 
     if (!token) {

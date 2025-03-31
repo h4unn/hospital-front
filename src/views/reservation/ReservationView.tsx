@@ -55,9 +55,9 @@ const ReservationView: React.FC = () => {
 
   const setReservation = useReservationStore((state) => state.setReservation);
   const reservation = useReservationStore((state) => state.userReservation);
+  console.log(reservation);
 
   const onSubmit: SubmitHandler<ReservationFormData> = (data) => {
-    console.log(data);
     setReservation({
       userType: data.userType,
       name: data.name,

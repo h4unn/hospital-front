@@ -1,7 +1,9 @@
 "use client";
 import cn from "classnames/bind";
 import styles from "./ProductListView.module.scss";
+
 import { useRouter } from "next/navigation";
+
 import Section from "@/components/UI/Section";
 import Item from "@/components/Item";
 // import Button from "@/component/Button/Button";
@@ -10,7 +12,7 @@ const cx = cn.bind(styles);
 
 type ProductListViewProps = {
   products: IProduct[];
-  admin: ILoginResponse;
+  admin?: ILoginResponse;
   onClick?: (id: string) => void;
 };
 const ProductListView: React.FC<ProductListViewProps> = ({
@@ -19,7 +21,6 @@ const ProductListView: React.FC<ProductListViewProps> = ({
   onClick,
 }) => {
   const router = useRouter();
-  console.log(admin);
 
   function handleClick(id: string) {
     router.push(`product/${id}`);
@@ -32,8 +33,9 @@ const ProductListView: React.FC<ProductListViewProps> = ({
           <Item
             key={product.id}
             id={product._id}
+            hospitalId={product.hospitalId._id}
             title={product.name}
-            hospital={admin.hospital}
+            hospital={admin?.hospital}
             description={product.description}
             price={product.price}
             selective={product.selective || undefined}

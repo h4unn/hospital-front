@@ -7,10 +7,6 @@ const AUTH_ROUTES = {
   LOGOUT: `/api/auth/logout`,
   REFRESH: `/api/auth/refresh`,
   GET_ADMIN_DATA: `/api/admin`,
-  KAKAO_SOCIAL_LOGIN: `/api/auth/kakao/login`,
-  KAKAO_SOCIAL_LOGOUT: `/api/auth/naver/login`,
-  NAVER_SOCIAL_LOGIN: `/api/auth/naver/login`,
-  NAVER_SOCIAL_LOGOUT: `/api/auth/naver/logout`,
 } as const;
 
 export class AuthService {
@@ -49,6 +45,11 @@ export class AuthService {
       throw new Error("No access token found");
     }
     const { data } = await this._ajax.get(`/api/admin/me`);
+    return data;
+  }
+
+  async getAdmings(): Promise<userResposenType[]> {
+    const { data } = await this._ajax.get(AUTH_ROUTES.GET_ADMIN_DATA);
     return data;
   }
 
