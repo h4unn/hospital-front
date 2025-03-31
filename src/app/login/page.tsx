@@ -22,6 +22,7 @@ export default function Login() {
         router.push("/");
       }
     } catch (error) {
+      console.error("Login error:", error);
       setLoginError(true);
     }
   };

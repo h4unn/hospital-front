@@ -26,13 +26,14 @@ type loginRequest = {
 };
 
 type ILoginResponse = {
-  hospitalName: ReactNode;
-  _id: string;
+  _id?: string;
   password: string;
   name: string;
   email: string;
   role?: role;
   hospital: {
+    _id?: string;
+    id?: string;
     hospitalName: string;
     address: string;
     latitude?: string;

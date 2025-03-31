@@ -60,8 +60,6 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
   const [address, setAddress] = React.useState("");
   const [postcode, setPostcode] = React.useState("");
 
-  console.log(reservation);
-
   return (
     <form
       className={cx("ReservationCheckUp")}
@@ -73,7 +71,7 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
             productData.price +
             (data.selectProduct ? productData.selective?.price || 0 : 0),
           productId: productData.id,
-          hospitalId: userData.hospital.id,
+          hospitalId: userData.hospital._id || "",
         })
       )}
     >

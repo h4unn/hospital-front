@@ -82,7 +82,7 @@ export default function Reservation() {
           onSubmit={(data) => {
             setReservation({
               productId: productData.data._id,
-              hospitalId: userData.data._id,
+              hospitalId: userData.data._id || "",
               reservation_date: data.reservation_date,
               name: data.name,
               tell: data.tell,

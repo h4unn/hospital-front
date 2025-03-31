@@ -15,6 +15,7 @@ export default function Home() {
       return response.data;
     },
     onSuccess: () => {
+      alert("회원가입에 완료되었습니다.");
       router.push("/login"); // 성공 시 라우팅
     },
     onError: () => {

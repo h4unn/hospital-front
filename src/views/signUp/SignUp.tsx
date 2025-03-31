@@ -23,7 +23,6 @@ type AddressData = {
 };
 
 type SignupFormType = {
-  id: string;
   password: string;
   passwordCheck: string;
   name: string;
@@ -106,7 +105,6 @@ const SignupView = ({ onSignup }: SignupViewProps) => {
     }
 
     onSignup({
-      id: data.id,
       email: data.email,
       password: data.password,
       name: data.name,
@@ -114,6 +112,7 @@ const SignupView = ({ onSignup }: SignupViewProps) => {
         hospitalName: data.hospital.hospitalName,
         businessNumber: data.hospital.businessNumber,
         address: `${data.hospital.address.basic}/${data.hospital.address.detail}`,
+        _id: "",
       },
     });
   };
