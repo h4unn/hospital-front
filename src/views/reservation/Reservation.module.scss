@@ -29,83 +29,79 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    flex-direction: column;
+    gap: 64px;
+    padding: 0 24px;
 
-    .Reservations {
+
+    .UserType {
       display: flex;
       flex-direction: column;
-      gap: 64px;
-      padding: 0 24px;
+      gap: 1rem;
 
-      .UserType {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-
-        .RadioArea {
-          display: flex;
-          gap: 1rem;
-          align-items: center;
-          justify-content: center;
-
-          label {
-            padding: 14px 54px;
-            border-radius: 24px;
-            border: 1px solid var(--gray100);
-            cursor: pointer;
-            transition: .3s ease all;
-          }
-
-          label.active {
-            background-color: var(--main-color);
-          }
-
-          input {
-            display: none;
-          }
-        }
-      }
-
-      //UserType
-
-      .UserInfo {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      // UserInfo
-
-      .ReserveType {
+      .RadioArea {
         display: flex;
         gap: 1rem;
-        justify-content: space-around;
+        align-items: center;
+        justify-content: center;
 
-        .ReserveTypeLabel {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          align-items: center;
+        label {
+          padding: 14px 54px;
+          border-radius: 24px;
           border: 1px solid var(--gray100);
-          border-radius: 10px;
-          padding: 4px 4rem;
-          transition: .3s ease all;
           cursor: pointer;
+          transition: .3s ease all;
+        }
 
-          &.active {
-            background-color: var(--main-color);
-          }
+        label.active {
+          background-color: var(--main-color);
+        }
 
-          input {
-            display: none;
-          }
+        input {
+          display: none;
         }
       }
-
     }
 
-    // Reservations
+    //UserType
+
+    .UserInfo {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    // UserInfo
+
+    .ReserveType {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-around;
+
+      .ReserveTypeLabel {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        border: 1px solid var(--gray100);
+        border-radius: 10px;
+        padding: 4px 4rem;
+        transition: .3s ease all;
+        cursor: pointer;
+
+        &.active {
+          background-color: var(--main-color);
+        }
+
+        input {
+          display: none;
+        }
+      }
+    }
+
   }
 
-  //form
-
+  // Reservations
 }
+
+//form

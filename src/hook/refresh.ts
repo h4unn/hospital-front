@@ -12,14 +12,14 @@ export const useCheckReservation = () => {
     if (
       !userReservation.name ||
       !userReservation.tell ||
-      !userReservation.reservationDate
+      !userReservation.reservation_date
     ) {
       router.push("/"); // 조건이 충족되지 않으면 "/"로 리디렉션
     }
   }, [
     userReservation.name,
     userReservation.tell,
-    userReservation.reservationDate,
+    userReservation.reservation_date,
     router,
     ,
   ]);

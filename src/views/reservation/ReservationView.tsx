@@ -3,19 +3,18 @@
 import React from "react";
 import cn from "classnames/bind";
 import styles from "./Reservation.module.scss";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import medicareImage1 from "@/assets/medicar_1.png";
 import medicareImage2 from "@/assets/medicar_2.png";
-import { useRouter } from "next/navigation";
+import { useReservationStore } from "@/store";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useReservationStore } from "@/store";
+import { useForm } from "react-hook-form";
 
 import Section from "@/components/UI/Section";
 import Input from "@/components/Input";
-// import DaumPostcode from "react-daum-postcode";
 import Calander from "@/component/Calander/Calander";
 import Button from "@/component/Button/Button";
 
@@ -24,7 +23,7 @@ const cx = cn.bind(styles);
 const schema = yup.object().shape({
   userType: yup
     .mixed<ReservationFormData["userType"]>()
-    .oneOf(["self", "other"])
+    .oneOf(["self", "auther"])
     .required("사용자 유형을 선택해주세요."),
   name: yup.string().required("이름을 입력해주세요."),
   birth: yup.string().required("생년월일을 입력해주세요."),
@@ -36,7 +35,7 @@ const schema = yup.object().shape({
 });
 
 type ReservationFormData = {
-  userType: "self" | "other";
+  userType: "self" | "auther";
   name: string;
   birth: string;
   tell: string;
@@ -44,29 +43,27 @@ type ReservationFormData = {
 };
 
 const ReservationView: React.FC = () => {
-  const router = useRouter();
+  const setReservation = useReservationStore((state) => state.setReservation);
   const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<ReservationFormData>({ resolver: yupResolver(schema) });
+    watch,
+  } = useForm<ReservationFormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      userType: "self",
+      reserveType: "combined",
+    },
+  });
 
-  const setReservation = useReservationStore((state) => state.setReservation);
-  const reservation = useReservationStore((state) => state.userReservation);
-  console.log(reservation);
+  const formValues = watch();
 
-  const onSubmit: SubmitHandler<ReservationFormData> = (data) => {
-    setReservation({
-      userType: data.userType,
-      name: data.name,
-      birth: data.birth,
-      tell: data.tell,
-      reserveType: data.reserveType,
-      reservationDate: selectedDate ?? new Date(),
-    });
-
+  const onSubmit = (data: ReservationFormData) => {
+    setReservation({ ...data, reservation_date: selectedDate });
     router.push("/hospitalList");
   };
 
@@ -77,107 +74,93 @@ const ReservationView: React.FC = () => {
           selectedDate={selectedDate}
           onDateSelect={(date) => setSelectedDate(date)}
         />
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={cx("Reservations")}>
-            <div className={cx("UserType")}>
-              <h3>예약자 정보</h3>
-              <p>
-                검진 예약을 위한 최소한의 입력사항입니다. 예약하시는 분의 정보를
-                입력해주세요.
-              </p>
-              <div className={cx("RadioArea")}>
-                <label
-                  className={cx("UserTypeLabel", {
-                    active: reservation.userType === "self",
-                  })}
-                >
-                  <input
-                    type="radio"
-                    value="self"
-                    {...register("userType")}
-                    defaultChecked
-                    onClick={() => setReservation({ userType: "self" })}
-                  />
-                  본인 예약
-                </label>
-                <label
-                  className={cx("UserTypeLabel", {
-                    active: reservation.userType === "other",
-                  })}
-                >
-                  <input
-                    type="radio"
-                    value="other"
-                    {...register("userType")}
-                    onClick={() => setReservation({ userType: "other" })}
-                  />
-                  대리 예약
-                </label>
-              </div>
-            </div>
 
-            <div className={cx("UserInfo")}>
-              <Input
-                label="예약자명"
-                required
-                {...register("name", { required: "이름을 입력해주세요." })}
-                error={errors.name}
-              />
-              <Input
-                label="생년월일"
-                required
-                {...register("birth", { required: "생년월일을 입력해주세요." })}
-                error={errors.birth}
-              />
-              <Input
-                label="전화번호"
-                required
-                {...register("tell", { required: "전화번호를 입력해주세요." })}
-                error={errors.tell}
-              />
-            </div>
-            <div className={cx("ReserveType")}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={cx("ReservationForm")}
+        >
+          <div className={cx("UserType")}>
+            <h3>예약자 정보</h3>
+            <p>
+              검진 예약을 위한 최소한의 입력사항입니다. 예약하시는 분의 정보를
+              입력해주세요.
+            </p>
+            <div className={cx("RadioArea")}>
               <label
-                className={cx("ReserveTypeLabel", {
-                  active: reservation.reserveType === "combined",
+                className={cx({
+                  active: formValues.userType === "self",
                 })}
               >
-                <span>종합검진</span>
-                <Image
-                  src={medicareImage1}
-                  alt="예약조회"
-                  className={cx("loginIcon")}
-                  width={72}
-                  height={72}
-                />
-                <input
-                  type="radio"
-                  value="combined"
-                  {...register("reserveType")}
-                  onClick={() => setReservation({ reserveType: "combined" })}
-                />
+                <input type="radio" value="self" {...register("userType")} />
+                본인 예약
               </label>
               <label
-                className={cx("ReserveTypeLabel", {
-                  active: reservation.reserveType === "public",
+                className={cx({
+                  active: formValues.userType === "auther",
                 })}
               >
-                <span>공단검진</span>
-                <Image
-                  src={medicareImage2}
-                  alt="예약조회"
-                  className={cx("loginIcon")}
-                  width={72}
-                  height={72}
-                />
-                <input
-                  type="radio"
-                  value="public"
-                  {...register("reserveType")}
-                  onClick={() => setReservation({ reserveType: "public" })}
-                />
+                <input type="radio" value="auther" {...register("userType")} />
+                대리 예약
               </label>
             </div>
+          </div>
+
+          <div className={cx("UserInfo")}>
+            <Input
+              label="예약자명"
+              required
+              {...register("name")}
+              error={errors.name}
+            />
+            <Input
+              label="생년월일"
+              required
+              {...register("birth")}
+              error={errors.birth}
+            />
+            <Input
+              label="전화번호"
+              required
+              {...register("tell")}
+              error={errors.tell}
+            />
+          </div>
+
+          <div className={cx("ReserveType")}>
+            <label
+              className={cx("ReserveTypeLabel", {
+                active: formValues.reserveType === "combined",
+              })}
+            >
+              <span>종합검진</span>
+              <Image
+                src={medicareImage1}
+                alt="예약조회"
+                className={cx("loginIcon")}
+                width={72}
+                height={72}
+              />
+              <input
+                type="radio"
+                value="combined"
+                {...register("reserveType")}
+              />
+            </label>
+            <label
+              className={cx("ReserveTypeLabel", {
+                active: formValues.reserveType === "public",
+              })}
+            >
+              <span>공단검진</span>
+              <Image
+                src={medicareImage2}
+                alt="예약조회"
+                className={cx("loginIcon")}
+                width={72}
+                height={72}
+              />
+              <input type="radio" value="public" {...register("reserveType")} />
+            </label>
           </div>
 
           <Button

@@ -2,6 +2,8 @@ import React from "react";
 import cn from "classnames/bind";
 import styles from "./ReservationCheckUp.module.scss";
 
+import * as yup from "yup";
+
 import { useCheckReservation } from "@/hook/refresh";
 import { useReservationStore } from "@/store";
 import { formatDate } from "@/utils/format";
@@ -15,6 +17,7 @@ const cx = cn.bind(styles);
 type ReservationCheckUpViewProps = {
   productData: IProduct;
   userData: ILoginResponse;
+  onSubmit: (data: orderRequestBody) => void;
 };
 
 const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
@@ -23,6 +26,14 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
 }) => {
   const reservation = useReservationStore((state) => state.userReservation);
   useCheckReservation();
+
+  // const schema = {
+  //   name: yup.string().required("이름을 입력해주세요."),
+  //   birth: yup.string().required("생년월일을 입력해주세요."),
+  //   tell: yup.string().required("전화번호를 입력해주세요."),
+  //   email: yup.string().email("유효한 이메일을 입력해주세요."),
+  //   address: yup.string().required("주소를 입력해주세요."),
+  // };
 
   const [address, setAddress] = React.useState("");
   const [postcode, setPostcode] = React.useState("");
@@ -45,7 +56,7 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
         <Input
           label="예약 희망 날짜"
           type="date"
-          value={formatDate(reservation.reservationDate)}
+          value={formatDate(reservation.reservation_date)}
           readOnly
         />
         <Input label="성명" value={reservation.name} readOnly />

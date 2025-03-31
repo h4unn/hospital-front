@@ -1,9 +1,9 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
-import { productService, authService } from "@/api/services";
+import { productService, authService, orderService } from "@/api/services";
 
 import Section from "@/components/UI/Section";
 import Loading from "@/components/Loading";
@@ -46,8 +46,19 @@ export default function Reservation() {
     enabled: !!productData?.data.hospitalId?._id,
   });
 
-  const isLoading = isProductLoading || isUserLoading;
-  const isError = isProductError || isUserError;
+  const { mutate: setReservation } = useMutation({
+    mutationFn: (data: orderRequestBody) => orderService.createOrder(data),
+
+    onSuccess: (data) => {
+      console.log("예약 성공", data);
+    },
+    onError: (error) => {
+      console.error("예약 실패", error);
+    },
+  });
+
+  const isLoading = isProductLoading && isUserLoading;
+  const isError = isProductError && isUserError;
 
   if (isLoading) return <Loading />;
 
@@ -65,6 +76,26 @@ export default function Reservation() {
         <ReservationCheckUpView
           productData={productData.data}
           userData={userData.data}
+          onSubmit={(data) => {
+            setReservation({
+              productId: data.productId,
+              hospitalId: data.hospitalId,
+              reservation_date: data.reservation_date,
+              reservation_time: data.reservation_time,
+              name: data.name,
+              tell: data.tell,
+              birth: data.birth,
+              address: {
+                zipcode: "",
+                basic: "",
+                detail: "",
+              },
+              gender: "",
+              email: "",
+              total_price: 0,
+            });
+            // 예약 성공 후 처리
+          }}
         />
       )}
     </Section>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { AuthService } from "./auth.service";
 import { ProductService } from "./product.service";
 import { SelectProductService } from "./selectProduct.service";
+import { OrderService } from "./order.service";
 
 let tokens = {
   accessToken: "",
@@ -69,3 +70,4 @@ apiServer.interceptors.response.use(
 export const authService = new AuthService(apiServer);
 export const productService = new ProductService(apiServer);
 export const selectProductService = new SelectProductService(apiServer);
+export const orderService = new OrderService(apiServer);
