@@ -1,5 +1,10 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
+
+import { FaInstagram } from "react-icons/fa";
+import { SiTistory } from "react-icons/si";
+import { FaGithub } from "react-icons/fa";
 
 import React from "react";
 import cn from "classnames/bind";
@@ -11,18 +16,29 @@ const Bottom = () => {
   return (
     <div className={cx("bottomWrapper")}>
       <div className={cx("logoContainer")}>
-        <Image
-          src="/images/bottomLogo.png"
-          alt=""
-          className={cx("logoTitle")}
-        />
+        <h2>
+          <Link href="/">
+            <Image
+              src="/images/bottomLogo.png"
+              alt=""
+              className={cx("logoTitle")}
+              width={100}
+              height={100}
+            />
+          </Link>
+        </h2>
       </div>
-      <div className={cx("snsContainer")}>
-        <Image src="/images/kakaotalk.png" alt="" />
-        <Image src="/images/insta.png" alt="" />
-        <Image src="/images/facebook.png" alt="" />
-        <Image src="/images/linkedin.png" alt="" />
-      </div>
+      <ul className={cx("snsContainer")}>
+        <li>
+          <FaInstagram />
+        </li>
+        <li>
+          <FaGithub />
+        </li>
+        <li>
+          <SiTistory />
+        </li>
+      </ul>
     </div>
   );
 };

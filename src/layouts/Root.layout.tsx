@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "@/component/Header/Header";
+import Bottom from "@/component/Bottom/Bottom";
 import cn from "classnames/bind";
 import styles from "@/layouts/Root.layout.module.scss";
 import "../style/globals.css";
@@ -20,7 +21,7 @@ export default function RootLayout(props: React.PropsWithChildren) {
           <div className={cx("fablInn")}>
             <Fab />
           </div>
-          {/* <Bottom /> */}
+          <Bottom />
         </div>
       </body>
     </html>
