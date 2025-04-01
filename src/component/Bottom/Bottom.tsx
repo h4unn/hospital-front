@@ -30,13 +30,19 @@ const Bottom = () => {
       </div>
       <ul className={cx("snsContainer")}>
         <li>
-          <FaInstagram />
+          <Link href={"https://www.instagram.com/hyunnmi_222/"}>
+            <FaInstagram />
+          </Link>
         </li>
         <li>
-          <FaGithub />
+          <Link href={"https://github.com/h4unn/"}>
+            <FaGithub />
+          </Link>
         </li>
         <li>
-          <SiTistory />
+          <Link href={"https://h4un2.tistory.com/"}>
+            <SiTistory />
+          </Link>
         </li>
       </ul>
     </div>

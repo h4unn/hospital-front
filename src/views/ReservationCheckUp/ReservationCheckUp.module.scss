@@ -38,6 +38,7 @@
       align-items: center;
       grid-template-columns: repeat(2, 1fr);
       gap: 30px;
+
     }
   }
 
@@ -63,5 +64,73 @@
       }
     }
 
+
   }
+
+  .PriceArea {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &>div {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      border-radius: 30px;
+      border: 1px solid var(--gray600);
+      overflow: hidden;
+      position: relative;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 1px;
+        height: 80%;
+        background-color: var(--gray100);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 8px;
+      }
+
+      p {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding: 20px 0;
+
+      }
+
+      p:first-child {
+        background-color: var(--sub-color);
+      }
+    }
+  }
+
+  .GenderRadio {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 12px 0;
+
+    label {
+      padding: 14px 54px;
+      border-radius: 24px;
+      border: 1px solid var(--gray100);
+      cursor: pointer;
+      transition: .3s ease all;
+    }
+
+    label.active {
+      background-color: var(--main-color);
+    }
+
+    input {
+      display: none;
+    }
+  }
+
+
 }

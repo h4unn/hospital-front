@@ -107,21 +107,25 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
           readOnly
           {...register("birth")}
         />
-        <div className="GenderRadio">
-          <label className={cx("UserTypeLabel", {})}>
+        <div className={cx("GenderRadio")}>
+          <label className={cx({ active: watch("gender") === "male" })}>
             <input type="radio" value="male" {...register("gender")} />
             <span>남성</span>
           </label>
-          <label className={cx("UserTypeLabel", {})}>
+          <label className={cx({ active: watch("gender") === "female" })}>
             <input type="radio" value="female" {...register("gender")} />
             <span>여성</span>
           </label>
+          {errors.gender && (
+            <p className={cx("errors")}>{errors.gender.message}</p>
+          )}
         </div>
         <Input
           label="전화번호"
           value={reservation.tell}
           readOnly
           {...register("tell")}
+          error={errors.tell}
         />
         <Input label="이메일" type="email" {...register("email")} />
 
@@ -131,6 +135,7 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
             value={address}
             readOnly
             {...register("address.basic")}
+            error={errors.address?.basic}
           />
           <Input label="상세주소" {...register("address.detail")} />
           <Input
@@ -138,6 +143,7 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
             value={postcode}
             readOnly
             {...register("address.zipcode")}
+            error={errors.address?.zipcode}
           />
           <KakaoPostPopUp setAddress={setAddress} setPostcode={setPostcode} />
         </div>
@@ -173,7 +179,7 @@ const ReservationCheckUpView: React.FC<ReservationCheckUpViewProps> = ({
         type="submit"
         label={"건강검진 예약"}
         backgroundColor={"#FFEA3C"}
-        disabled={isSubmitting || Object.keys(errors).length > 0}
+        disabled={isSubmitting}
         borderColor={"#BFC662"}
       />
     </form>
