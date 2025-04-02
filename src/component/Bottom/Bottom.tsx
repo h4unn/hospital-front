@@ -28,23 +28,31 @@ const Bottom = () => {
           </Link>
         </h2>
       </div>
-      <ul className={cx("snsContainer")}>
-        <li>
-          <Link href={"https://www.instagram.com/hyunnmi_222/"}>
-            <FaInstagram />
-          </Link>
-        </li>
-        <li>
-          <Link href={"https://github.com/h4unn/"}>
-            <FaGithub />
-          </Link>
-        </li>
-        <li>
-          <Link href={"https://h4un2.tistory.com/"}>
-            <SiTistory />
-          </Link>
-        </li>
-      </ul>
+
+      <div className={cx("bottomText")}>
+        <div className={cx("Info")}>
+          <p>made in. Cho Hyun name</p>
+          <p>Copyright © 2025 EasyCare. All rights reserved.</p>
+          <p>이 사이트는 개인 프로젝트로, 실제 서비스와 관련이 없습니다.</p>
+        </div>
+        <ul className={cx("snsContainer")}>
+          <li>
+            <Link href={"https://www.instagram.com/hyunnmi_222/"}>
+              <FaInstagram />
+            </Link>
+          </li>
+          <li>
+            <Link href={"https://github.com/h4unn/"}>
+              <FaGithub />
+            </Link>
+          </li>
+          <li>
+            <Link href={"https://h4un2.tistory.com/"}>
+              <SiTistory />
+            </Link>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };
