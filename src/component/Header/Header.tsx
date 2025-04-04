@@ -8,29 +8,34 @@ import styles from "./Header.module.scss";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 import { authService } from "@/api/services";
+import { useUser } from "@/store/user";
 import headerLogo from "../../../public/images/easycare2.png";
 import LoginBox from "./LoginBox";
+import LoadingIndecator from "@/components/LoadingIndecator";
 
 const cx = cn.bind(styles);
 
 const Header = () => {
   const router = useRouter();
+  const { user, logout } = useUser();
 
-  const { data: user, isLoading } = useQuery({
-    queryKey: ["User"],
+  const { data: userData, isLoading: userIsLoading } = useQuery({
+    queryKey: ["User", user.name],
     queryFn: async () => {
-      const response = await authService.getMyInfo();
+      const response = await authService.getMyInfo(user.token);
       return response.data;
     },
     refetchOnWindowFocus: true,
-    staleTime: 0,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
     retry: 0,
+    enabled: !!user.token,
   });
 
   const logoutMutation = useMutation({
     mutationFn: async () => authService.logout(),
     onSuccess: () => {
-      localStorage.removeItem("accessToken");
+      logout();
       router.push("/login");
     },
   });
@@ -49,11 +54,11 @@ const Header = () => {
           </a>
         </Link>
 
-        {isLoading ? (
-          <div className={cx("loadingSkeleton")}>Loading...</div>
+        {userIsLoading ? (
+          <LoadingIndecator />
         ) : (
           <div className={cx("loginContainer")}>
-            {!user ? (
+            {!userData ? (
               <Link href="/login" passHref legacyBehavior>
                 <a className={cx("imageBox")}>
                   <Image
@@ -68,7 +73,7 @@ const Header = () => {
                 </a>
               </Link>
             ) : (
-              <LoginBox user={user} logoutMutation={logoutMutation} />
+              <LoginBox user={userData} logoutMutation={logoutMutation} />
             )}
           </div>
         )}

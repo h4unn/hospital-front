@@ -36,16 +36,31 @@ export class AuthService {
     }
   }
 
-  async getMyInfo(): Promise<userResposenType> {
-    const token = localStorage.getItem("accessToken");
+  async getMyInfo(token: string): Promise<userResposenType> {
+    try {
+      if (!token) {
+        throw new Error("No access token found");
+      }
 
-    if (token) {
       this._ajax.defaults.headers.Authorization = `Bearer ${token}`;
-    } else {
-      throw new Error("No access token found");
+      const { data } = await this._ajax.get(`/api/admin/me`);
+
+      if (!data) {
+        throw new Error("No data found");
+      }
+
+      return data;
+    } catch (error) {
+      let errorMessage = "Failed to fetch user data";
+
+      if (error instanceof Error) {
+        errorMessage += `: ${error.message}`;
+      } else if (typeof error === "string") {
+        errorMessage += `: ${error}`;
+      }
+
+      throw new Error(errorMessage);
     }
-    const { data } = await this._ajax.get(`/api/admin/me`);
-    return data;
   }
 
   async getAdmings(): Promise<userResposenType[]> {
